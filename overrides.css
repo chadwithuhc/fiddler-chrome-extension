@@ -11,3 +11,10 @@ body.fiddler--no-js-panel #panel_js,
 body.fiddler--no-result-panel #result {
   display: none;
 }
+
+body.fiddler--no-html-panel #panel_js,
+body.fiddler--no-js-panel #panel_html,
+body.fiddler--no-css-panel #result,
+body.fiddler--no-result-panel #panel_css {
+  height: 100% !important;
+}

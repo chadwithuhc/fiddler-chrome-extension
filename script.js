@@ -61,12 +61,23 @@ const Fiddler = {
 		document.body.classList.toggle('fiddler--no-sidebar')
 	},
 
+	panelStates: {
+		html: true,
+		css: true,
+		js: true,
+		result: true
+	},
+
 	togglePanel(e) {
 		const panel = e.target.dataset.panel
 
-		if (panel) {
-			document.body.classList.toggle(`fiddler--no-${panel}-panel`)
+		if (!panel) {
+			return
 		}
+
+		Fiddler.panelStates[panel] = !Fiddler.panelStates[panel]
+
+		document.body.classList.toggle(`fiddler--no-${panel}-panel`)
 	}
 
 }
