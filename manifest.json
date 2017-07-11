@@ -1,7 +1,7 @@
 {
-	"name": "Inject sidebar",
+	"name": "Fiddler",
 	"manifest_version": 2,
-	"description": "Inject a sidebar on the current tab when the page action is clicked",
+	"description": "jsfiddle.net enhancer",
 	"version": "0.2",
 	"background": {
 		"page": "background.html"
@@ -14,6 +14,10 @@
 		{
 			"matches": ["<all_urls>"],
 			"js": ["script.js"]
+		},
+		{
+			"matches": ["https://jsfiddle.net/*"],
+			"css": ["overrides.css"]
 		}
 	],
 	"permissions": [

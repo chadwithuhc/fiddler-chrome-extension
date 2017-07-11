@@ -1,0 +1,13 @@
+body.fiddler--no-sidebar #sidebar {
+  display: none;
+}
+body.fiddler--no-sidebar #content {
+  margin-left: 0;
+}
+
+body.fiddler--no-html-panel #panel_html,
+body.fiddler--no-css-panel #panel_css,
+body.fiddler--no-js-panel #panel_js,
+body.fiddler--no-result-panel #result {
+  display: none;
+}
