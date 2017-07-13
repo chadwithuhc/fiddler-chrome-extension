@@ -1,7 +1,13 @@
-body.fiddler--no-sidebar #sidebar {
+body.fiddler--presentation-mode {
+
+}
+
+body.fiddler--no-sidebar #sidebar,
+body.fiddler--presentation-mode #sidebar {
   display: none;
 }
-body.fiddler--no-sidebar #content {
+body.fiddler--no-sidebar #content,
+body.fiddler--presentation-mode #content {
   margin-left: 0;
 }
 
@@ -18,3 +24,14 @@ body.fiddler--no-css-panel #result,
 body.fiddler--no-result-panel #panel_css {
   height: 100% !important;
 }
+
+body.fiddler--editor-font-size-14 .CodeMirror {font-size: 14px;}
+body.fiddler--editor-font-size-14 .CodeMirror-linenumber {font-size: 10px;}
+body.fiddler--editor-font-size-15 .CodeMirror {font-size: 15px;}
+body.fiddler--editor-font-size-15 .CodeMirror-linenumber {font-size: 11px;}
+body.fiddler--editor-font-size-16 .CodeMirror {font-size: 16px;}
+body.fiddler--editor-font-size-16 .CodeMirror-linenumber {font-size: 12px;}
+body.fiddler--editor-font-size-17 .CodeMirror {font-size: 17px;}
+body.fiddler--editor-font-size-17 .CodeMirror-linenumber {font-size: 13px;}
+body.fiddler--editor-font-size-18 .CodeMirror {font-size: 18px;}
+body.fiddler--editor-font-size-18 .CodeMirror-linenumber {font-size: 14px;}
