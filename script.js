@@ -1,58 +1,76 @@
-/*Handle requests from background.html*/
-function handleRequest(
-	//The object data with the request params
-	request,
-	//These last two ones isn't important for this example, if you want know more about it visit: http://code.google.com/chrome/extensions/messaging.html
-	sender, sendResponse
-	) {
-	if (request.callFunction == "toggleSidebar")
-		toggleSidebar();
-}
-chrome.extension.onRequest.addListener(handleRequest);
+// GO!
+addSettingsToPage()
 
-const template = `
-	<button class="no-sidebar">Toggle Sidebar</button>
-	<div class="no-panel">
-		<button data-panel="html">Toggle HTML Panel</button>
-		<button data-panel="css">Toggle CSS Panel</button>
-		<br />
-		<button data-panel="js">Toggle Javascript Panel</button>
-		<button data-panel="result">Toggle Result Panel</button>
-	</div>
-`
+function addSettingsToPage() {
+	const editorOptionsContainer = document.querySelector('#editor-options')
+	editorOptionsContainer.innerHTML += `<hr/>`
 
-/*Small function wich create a sidebar(just to illustrate my point)*/
-var sidebarOpen = false;
-function toggleSidebar() {
-	if(sidebarOpen) {
-		var el = document.getElementById('mySidebar');
-		el.parentNode.removeChild(el);
-		sidebarOpen = false;
-	}
-	else {
-		var sidebar = document.createElement('div');
-		sidebar.id = "mySidebar";
-		sidebar.innerHTML = template
-		sidebar.style.cssText = "\
-			position:fixed;\
-			bottom:0px;\
-			left:0px;\
-			width:100%;\
-			height:20%;\
-			background:white;\
-			box-shadow:inset 0 0 0.2em black;\
-			z-index:999999;\
-		";
-		document.body.appendChild(sidebar);
-		sidebarOpen = true;
-	}
+	const template = `
+		<label class="checkboxCont">
+			<input type="checkbox" name="{name}" checked="{checked}" data-action="{action}" data-opt="{opt}">
+			<span class="checkbox"><i class="bts bt-check"></i></span>
+			{label}
+		</label>
+	`
 
-	setupListeners(sidebar)
-}
+	const options = [
+		{
+			name: 'showSidebar',
+			label: 'Show Sidebar',
+			checked: 'checked',
+			action: 'toggleSidebar'
+		},
+		{
+			name: 'showHTMLPanel',
+			label: 'Show HTML Panel',
+			checked: 'checked',
+			action: 'togglePanel',
+			opt: 'html'
+		},
+		{
+			name: 'showCSSPanel',
+			label: 'Show CSS Panel',
+			checked: 'checked',
+			action: 'togglePanel',
+			opt: 'css'
+		},
+		{
+			name: 'showJavaScriptPanel',
+			label: 'Show JavaScript Panel',
+			checked: 'checked',
+			action: 'togglePanel',
+			opt: 'js'
+		},
+		{
+			name: 'showResultPanel',
+			label: 'Show Result Panel',
+			checked: 'checked',
+			action: 'togglePanel',
+			opt: 'result'
+		}
+	]
 
-function setupListeners(container) {
-	container.querySelector('.no-sidebar').addEventListener('click', Fiddler.toggleSidebar)
-	container.querySelector('.no-panel').addEventListener('click', Fiddler.togglePanel)
+	options.forEach((settings) => {
+		const html = template
+			.replace('{name}', settings.name)
+			.replace('{label}', settings.label)
+			.replace('{checked}', settings.checked)
+			.replace('{action}', settings.action)
+			.replace('{opt}', settings.opt)
+
+		const el = document.createElement('p')
+		el.innerHTML = html
+
+		el.querySelector('input').addEventListener('change', (e) => {
+			const action = e.target.dataset.action
+
+			if (Fiddler.hasOwnProperty(action) && typeof Fiddler[action] === 'function') {
+				Fiddler[action](e.target.dataset.opt)
+			}
+		})
+
+		editorOptionsContainer.appendChild(el)
+	})
 }
 
 const Fiddler = {
@@ -68,9 +86,7 @@ const Fiddler = {
 		result: true
 	},
 
-	togglePanel(e) {
-		const panel = e.target.dataset.panel
-
+	togglePanel(panel) {
 		if (!panel) {
 			return
 		}

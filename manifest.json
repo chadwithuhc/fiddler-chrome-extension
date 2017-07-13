@@ -2,21 +2,11 @@
 	"name": "Fiddler",
 	"manifest_version": 2,
 	"description": "jsfiddle.net enhancer",
-	"version": "0.2",
-	"background": {
-		"page": "background.html"
-	},
-	"page_action": {
-		"default_icon": "icon.png",
-		"default_title": "Inject sidebar"
-	},
+	"version": "1.0",
 	"content_scripts": [
 		{
-			"matches": ["<all_urls>"],
-			"js": ["script.js"]
-		},
-		{
 			"matches": ["https://jsfiddle.net/*"],
+			"js": ["script.js"],
 			"css": ["overrides.css"]
 		}
 	],
